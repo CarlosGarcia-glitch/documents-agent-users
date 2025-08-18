@@ -38,5 +38,5 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  base: '/chatbot-isol-frontend/'
+  base: '/isol-agent-dashboard/'
 });
