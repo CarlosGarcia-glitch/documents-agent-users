@@ -1,0 +1,11 @@
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+  
+    &_content {
+      background-color: white;
+    }
+  }
+  
