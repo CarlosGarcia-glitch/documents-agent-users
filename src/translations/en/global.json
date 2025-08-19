@@ -1,10 +1,4 @@
 {
-  "greeting": "Hi! How can I assist you? ",
-  "processing": "I am processing your file, I'll let you know once I'm done.",
-  "selected": "Selected: ",
-  "input": {
-    "placeholder": "Message..."
-  },
   "footer": "© 2025 by ISOL. All rights reserved",
   "login": {
     "alerts": {
@@ -30,14 +24,37 @@
       "required": "The password is required"
     }
   },
-  "errors": {
-    "ask_agent": {
-      "chat": "There was an error trying to send the message to the ISOL chatbot. Please contact your administrator or try again later.",
-      "alert": "Error sending message."
+  "dashboard": {
+    "header": {
+      "title": "User Manager",
+      "subtitle": "Manage users and their permissions",
+      "new_user": "New User",
+      "language": "EN"
     },
-   "init_chat" : {
-      "chat": "There was an error trying to start the chat. Please contact your administrator or try again later.",
-      "alert": "Error trying to start the chat."
-    }
+    "content": {
+      "title": "A list of all users in your organization.",
+      "no_users": "There are no registered users yet. Try creating a new user."
+    },
+    "error": "There was an error trying to get the users."
+  },
+  "create_new_user": {
+    "title": "Add new user",
+    "email": {
+      "label": "E-mail Address",
+      "invalid": "The email is invalid",
+      "required": "The email is required"
+    },
+    "name": { "required": "The name is required", "label": "Full Name" },
+    "role": {
+      "label": "User Role",
+      "required": "The role is required",
+      "user": "User",
+      "admin": "Admin"
+    },
+    "error": "Could not create the user",
+    "success": "User created successfully!",
+    "cancel": "Cancel",
+    "loading": "Loading",
+    "save": "Save"
   }
 }
