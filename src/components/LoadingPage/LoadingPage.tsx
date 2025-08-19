@@ -5,7 +5,7 @@ import Styles from './_LoadingPage.module.scss'
 const LoadingPage = () => {
    return (
       <Box className={Styles.loading_page}>
-         <CircularProgress color="secondary" sx={{ fontSize: '5rem' }} />
+         <CircularProgress color="primary" sx={{ fontSize: '5rem' }} />
       </Box>
    )
 }
