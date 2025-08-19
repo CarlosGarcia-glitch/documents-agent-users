@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Footer from '@/components/Footer/Footer';
-import { getLoginFormSchema } from '@/utils/schemas/loginFormSchema';
+import { getLoginFormSchema } from '@/utils/schemas/FormSchemas';
 
 import ChatbotIcon from '@/components/icons/ChatbotIcon';
 import { useAlert, useAppContext, useTranslations } from '@/contexts/AppContext';
@@ -45,7 +45,7 @@ const Login = (props: Props) => {
           setUser(resp?.user_info);
           localStorage.setItem('token', resp?.access_token);
           setAlert(true, 'success', t.login.alerts.success.login);
-          navigate('/chat');
+          navigate('/dashboard');
         } catch (error) {
           console.error(error);
           setAlert(true, 'error', t.login.alerts.error.login);
