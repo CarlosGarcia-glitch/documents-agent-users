@@ -1,4 +1,4 @@
-import logo from '../../../public/logo.jpg';
+import logo from '/logo.jpg';
 import Styles from './_ChatbotIcon.module.scss';
 
 const ChatbotIcon = () => {
