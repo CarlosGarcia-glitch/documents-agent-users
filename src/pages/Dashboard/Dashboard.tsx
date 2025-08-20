@@ -24,10 +24,15 @@ function Dashboard() {
   const { setAlert } = useAlert();
   const navigate = useNavigate();
 
-  const { language, setLanguage, setUser } = useAppContext();
+  const { language, setLanguage, setUser, user } = useAppContext();
   const [users, setUsers] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const userName = user?.username
+    ?.replace(/_/g, ' ')
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
 
   useEffect(() => {
     const getUsers = async () => {
@@ -67,7 +72,7 @@ function Dashboard() {
       <div className={Styles.container}>
         <header className={Styles.header}>
           <div className={Styles.header_title}>
-            <h1>{t.dashboard.header.title}</h1>
+            <h1>{userName ?? t.dashboard.header.title}</h1>
             <p>{t.dashboard.header.subtitle}</p>
           </div>
           <Button
