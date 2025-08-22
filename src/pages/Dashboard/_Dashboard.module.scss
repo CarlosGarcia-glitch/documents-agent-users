@@ -10,6 +10,11 @@
     gap: 1rem;
 
     &_title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
       h1 {
         font-size: x-large;
         color: $primary-text;
@@ -23,6 +28,10 @@
     }
   }
   .content {
+    height: 68vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -66,14 +75,31 @@
       }
     }
   }
+  .footer {
+    padding: 1rem;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 @media (min-width: 430px) {
   .container {
-    padding: 2rem 24rem;
+    padding: 0.5rem 24rem;
     .header {
       flex-direction: row;
       justify-content: space-between;
+
+      &_title {
+        flex-direction: row-reverse;
+        gap: 1rem;
+      }
+    }
+    .content {
+      height: 76vh;
+    }
+    .footer {
+      padding-bottom: 0;
     }
   }
 }

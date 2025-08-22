@@ -2,12 +2,21 @@ import { useEffect, useState } from 'react';
 
 import {
   Add,
+  Home,
   Language,
   Logout,
   MailOutline,
+  Menu as MenuIcon,
   PersonOutline,
 } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import {
+  Button,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Pagination,
+} from '@mui/material';
 
 import CreateNewUser from '@/components/CreateNewUser/CreateNewUser';
 import {
@@ -26,6 +35,8 @@ function Dashboard() {
 
   const { language, setLanguage, setUser, user } = useAppContext();
   const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const userName = user?.username
@@ -37,8 +48,9 @@ function Dashboard() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const users = await AuthService.getUsers();
+        const { users, total } = await AuthService.getUsers(page - 1);
         setUsers(users);
+        setTotalPages(() => Math.ceil(total / 10));
       } catch (error) {
         console.error('Error fetching users:', error);
         setAlert(true, 'error', t.dashboard.error);
@@ -47,7 +59,7 @@ function Dashboard() {
       }
     };
     getUsers();
-  }, []);
+  }, [page]);
 
   const toggleLanguage = () => {
     const newLang = language === 'en' ? 'es' : 'en';
@@ -67,25 +79,64 @@ function Dashboard() {
     }
   };
 
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <div className={Styles.container}>
         <header className={Styles.header}>
           <div className={Styles.header_title}>
-            <h1>{userName ?? t.dashboard.header.title}</h1>
-            <p>{t.dashboard.header.subtitle}</p>
+            <div>
+              <h1>{userName ?? t.dashboard.header.title}</h1>
+              <p>{t.dashboard.header.subtitle}</p>
+            </div>
+            <div>
+              <Button
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
+                <MenuIcon />
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                slotProps={{
+                  list: {
+                    'aria-labelledby': 'basic-button',
+                  },
+                }}
+              >
+                <MenuItem onClick={toggleLanguage}>
+                  <ListItemIcon>
+                    <Language fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>{t.dashboard.header.language}</ListItemText>
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>{t.dashboard.header.logout}</ListItemText>
+                </MenuItem>
+              </Menu>
+            </div>
           </div>
-          <Button
-            onClick={toggleLanguage}
-            variant="outlined"
-            size="small"
-            startIcon={<Language />}
-          >
-            {t.dashboard.header.language}
-          </Button>
-          <Button onClick={handleLogout} variant="outlined" size="small">
-            <Logout />
-          </Button>
           <Button
             className={Styles.header_button}
             variant="contained"
@@ -103,20 +154,40 @@ function Dashboard() {
             {t.dashboard.content.title}
           </span>
 
-          {users?.map(({ name, email, id, role }) => {
-            return (
-              <article key={id} className={Styles.content_card}>
-                <p className={Styles.content_card__name}>
-                  <PersonOutline fontSize="small" />
-                  {name}
-                </p>
-                <p className={Styles.content_card_email}>
-                  <MailOutline fontSize="small" /> {email}
-                </p>
-                <span className={Styles.content_card__pill}>{role}</span>
-              </article>
-            );
-          })}
+          {users?.map(
+            ({
+              username,
+              email,
+              id,
+              role,
+            }: {
+              username: string;
+              email: string;
+              id: number;
+              role: string;
+            }) => {
+              return (
+                <article key={id} className={Styles.content_card}>
+                  <p className={Styles.content_card__name}>
+                    <PersonOutline fontSize="small" />
+                    {username
+                      .replace(/_/g, ' ')
+                      .split(' ')
+                      .map(
+                        (word: string) =>
+                          word.charAt(0).toUpperCase() +
+                          word.slice(1).toLowerCase(),
+                      )
+                      .join(' ')}
+                  </p>
+                  <p className={Styles.content_card_email}>
+                    <MailOutline fontSize="small" /> {email}
+                  </p>
+                  <span className={Styles.content_card__pill}>{role}</span>
+                </article>
+              );
+            },
+          )}
           {users?.length === 0 && (
             <article className={Styles.content_card}>
               <p className={Styles.content_card__name}>
@@ -125,12 +196,16 @@ function Dashboard() {
             </article>
           )}
         </section>
+        <footer className={Styles.footer}>
+          <Pagination count={totalPages} page={page} onChange={handleChange} />
+        </footer>
       </div>
       <CreateNewUser
         onCloseDialog={() => setIsDialogOpen(false)}
         isDialogOpen={isDialogOpen}
         loading={loading}
         setLoading={(value) => setLoading(value)}
+        setPage={() => setPage(1)}
       />
     </>
   );
