@@ -22,11 +22,13 @@ const CreateNewUser = ({
   isDialogOpen,
   loading,
   setLoading,
+  setPage,
 }: {
   onCloseDialog: () => void;
   isDialogOpen: boolean;
   loading: boolean;
   setLoading: (arg0: boolean) => void;
+  setPage: () => void;
 }) => {
   const t = useTranslations();
   const { setAlert } = useAlert();
@@ -41,15 +43,26 @@ const CreateNewUser = ({
       onSubmit: async (formValues: FormikValues) => {
         setLoading(true);
         try {
-          await AuthService.register({
-            username: formValues.name
-              .toLowerCase()
-              .replace(/ /g, '_')
-              .replace(/[^a-zA-Z0-9_]/g, ''),
-            email: formValues.email,
-            role: formValues.role,
-          });
+          const name = formValues.name
+            .toLowerCase()
+            .replace(/ /g, '_')
+            .replace(/[^a-zA-Z0-9_]/g, '');
+          if (formValues.role === 'USER') {
+            await AuthService.registerUser({
+              username: name,
+              email: formValues.email,
+              role: formValues.role,
+            });
+          } else {
+            await AuthService.registerAdmin({
+              username: name,
+              email: formValues.email,
+              role: formValues.role,
+            });
+          }
           setAlert(true, 'success', t.create_new_user.success);
+          onCloseDialog();
+          setPage();
         } catch (error) {
           console.error(error);
           setAlert(true, 'error', t.create_new_user.error);
@@ -108,7 +121,9 @@ const CreateNewUser = ({
           error={Boolean(errors.role)}
           disabled={loading}
         >
-          <InputLabel id="role-label">{t.create_new_user.role.label}</InputLabel>
+          <InputLabel id="role-label">
+            {t.create_new_user.role.label}
+          </InputLabel>
           <Select
             labelId="role-label"
             id="role"
