@@ -29,7 +29,8 @@
       "title": "User Manager",
       "subtitle": "Manage users and their permissions",
       "new_user": "New User",
-      "language": "EN"
+      "language": "EN",
+      "logout": "Logout"
     },
     "content": {
       "title": "A list of all users in your organization.",

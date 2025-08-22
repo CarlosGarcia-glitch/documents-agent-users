@@ -29,7 +29,8 @@
       "title": "Administrador",
       "subtitle": "Administra usuarios y permisos",
       "new_user": "Nuevo usuario",
-      "language": "ES"
+      "language": "ES",
+      "logout":"Cerrar sesión"
     },
     "content": {
       "title": "Una lista de todos los usuarios en tu organizacion.",
