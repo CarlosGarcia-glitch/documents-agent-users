@@ -38,5 +38,5 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  base: '/isol-agent-dashboard/'
+  base: '/documents-agent-dashboard/'
 });

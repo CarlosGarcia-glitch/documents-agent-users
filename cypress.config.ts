@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:5173/isol-agent-dashboard/',
+    baseUrl: 'http://localhost:5173/documents-agent-dashboard/',
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
