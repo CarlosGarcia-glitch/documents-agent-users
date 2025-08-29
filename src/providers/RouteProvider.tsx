@@ -1,11 +1,12 @@
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ProtectedRoute } from './ProtectedRoute ';
-import Login from '@/pages/Login/Login';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
 import Dashboard from '@/pages/Dashboard/Dashboard';
+import Login from '@/pages/Login/Login';
+import { ProtectedRoute } from './ProtectedRoute ';
 
 export const RouterProvider = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
 
@@ -15,6 +16,6 @@ export const RouterProvider = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
