@@ -38,5 +38,5 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  base: ''
+  base: '/documents-agent-users/'
 });
