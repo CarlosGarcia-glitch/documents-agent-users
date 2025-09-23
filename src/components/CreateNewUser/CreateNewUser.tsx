@@ -75,6 +75,7 @@ const CreateNewUser = ({
     <Dialog onClose={onCloseDialog} open={isDialogOpen}>
       <DialogTitle>{t.create_new_user.title}</DialogTitle>
       <DialogContent>
+        <br />
         <TextField
           value={values.name}
           required
@@ -83,7 +84,7 @@ const CreateNewUser = ({
           label={t.create_new_user.name.label}
           type="text"
           fullWidth
-          variant="standard"
+          variant="outlined"
           error={touched?.name && Boolean(errors.name)}
           helperText={
             touched.name && typeof errors.name === 'string'
@@ -103,7 +104,7 @@ const CreateNewUser = ({
           label={t.create_new_user.email.label}
           type="email"
           fullWidth
-          variant="standard"
+          variant="outlined"
           error={touched?.email && Boolean(errors.email)}
           helperText={
             touched.email && typeof errors.email === 'string'
@@ -116,7 +117,7 @@ const CreateNewUser = ({
           disabled={loading}
         />
         <FormControl
-          variant="standard"
+          variant="outlined"
           required
           error={Boolean(errors.role)}
           disabled={loading}

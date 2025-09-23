@@ -80,6 +80,7 @@ const Login = (props: Props) => {
               onBlur={handleBlur}
               onChange={handleChange}
               onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+              disabled={loading}
             />
             <InputLabel htmlFor="password">
               {t.login.labels.password}
@@ -120,6 +121,7 @@ const Login = (props: Props) => {
                   ),
                 },
               }}
+              disabled={loading}
             />
           </div>
           <div className={Styles.login__card_footer}>
